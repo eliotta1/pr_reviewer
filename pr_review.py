@@ -17,13 +17,19 @@ def review_code_with_gpt4(code_diff, openai_api_key):
     Sends the code diff to GPT-4 and receives feedback.
     """
     client = OpenAI(api_key=openai_api_key)
+    prompt = (
+        "Review the following GitHub PR code changes:\n\n"
+        f"{code_diff}\n\n"
+        "Provide detailed constructive feedback to improve the code given. "
+        "When suggesting changes, please show the line before and after change."
+    )
     try:
         response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
                     "role": "user",
-                    "content": f"Review the following GitHub PR code changes:\n\n{code_diff}\n\nProvide detailed constructive feedback to improve the code given. When suggesting changes, please show the line before and after change."
+                    "content": prompt,
                 }
             ]
         )
