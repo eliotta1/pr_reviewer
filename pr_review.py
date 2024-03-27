@@ -51,6 +51,7 @@ def fetch_pr_diff(owner, repo, pr_number, github_token=None):
         return response.text
     else:
         logging.error(f"Failed to fetch PR details. Status Code: {response.status_code}")
+        print(response.textw)
         return None
 
 def filter_diff_based_on_extensions(diff, exclude_extensions):
@@ -110,7 +111,7 @@ def main(pr_link):
 
     if pr_diff:
         logging.info("Processing diff code...")
-        exclude_extensions = [".ipynb", ".md"]  # Add more extensions as needed
+        exclude_extensions = [".ipynb", ".md", ".lock"]  # Add more extensions as needed
         pr_diff_filtered = filter_diff_based_on_extensions(pr_diff, exclude_extensions)
 
         logging.info("Reviewing code diff...")
